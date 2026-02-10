@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정부지원사업 컨설팅 — 합격 전략 마스터클래스</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+  --primary: #1a1a2e;
+  --accent: #e94560;
+  --accent2: #0f3460;
+  --accent3: #16213e;
+  --gold: #f5a623;
+  --green: #27ae60;
+  --light: #f8f9fa;
+  --gradient1: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --gradient2: linear-gradient(135deg, #e94560 0%, #f5a623 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,249,250,0.9));
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0a0a0a;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ── Slide Container ── */
+.deck {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Navigation ── */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 1000;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+.nav-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  width: 28px;
+  border-radius: 5px;
+}
+
+.slide-counter {
+  position: fixed;
+  top: 24px;
+  right: 36px;
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  letter-spacing: 2px;
+}
+
+.arrow-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  color: rgba(255,255,255,0.6);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.arrow-nav:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.arrow-prev { left: 20px; }
+.arrow-next { right: 20px; }
+
+/* ── Slide Backgrounds ── */
+.bg-hero { background: var(--gradient1); }
+.bg-dark { background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 100%); }
+.bg-white { background: linear-gradient(160deg, #ffffff 0%, #f0f2f5 100%); }
+.bg-accent { background: linear-gradient(160deg, #e94560 0%, #c0392b 100%); }
+.bg-deep { background: linear-gradient(160deg, #0f3460 0%, #16213e 100%); }
+.bg-gradient { background: linear-gradient(160deg, #1a1a2e 0%, #e94560 100%); }
+
+/* ── Typography ── */
+.hero-title {
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -2px;
+  text-align: center;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 22px);
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  margin-top: 20px;
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.section-num {
+  font-size: clamp(80px, 10vw, 140px);
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  line-height: 1;
+  letter-spacing: -8px;
+}
+
+.section-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -1px;
+  margin-bottom: 32px;
+}
+
+.text-white { color: #fff; }
+.text-dark { color: var(--primary); }
+
+/* ── Cards ── */
+.card-grid {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-6 { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; }
+
+.card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px;
+  backdrop-filter: blur(20px);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(233, 69, 96, 0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.card-white {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  transition: all 0.35s;
+}
+.card-white:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.card-desc {
+  font-size: 13.5px;
+  line-height: 1.65;
+  opacity: 0.7;
+}
+
+.card-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 12px;
+}
+
+/* ── Diagram Elements ── */
+.flow-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.flow-step {
+  flex: 1;
+  text-align: center;
+  padding: 20px 16px;
+  position: relative;
+}
+
+.flow-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--gradient2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 24px;
+  box-shadow: 0 8px 32px rgba(233, 69, 96, 0.3);
+}
+
+.flow-arrow {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.25);
+  font-size: 24px;
+}
+
+.flow-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.flow-sub {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+
+/* ── Timeline ── */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent), var(--gold), var(--green), transparent);
+}
+
+.tl-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.tl-left {
+  width: 45%;
+  text-align: right;
+  padding-right: 32px;
+}
+
+.tl-right {
+  width: 45%;
+  text-align: left;
+  padding-left: 32px;
+  margin-left: auto;
+}
+
+.tl-dot {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  background: var(--primary);
+  z-index: 2;
+}
+
+.tl-month {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+.tl-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 2px;
+}
+.tl-detail {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+
+/* ── Compare (Good vs Bad) ── */
+.compare-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.compare-box {
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.compare-bad {
+  background: linear-gradient(145deg, #2a0a0a, #1a0505);
+  border: 1.5px solid rgba(231, 76, 60, 0.3);
+}
+
+.compare-good {
+  background: linear-gradient(145deg, #0a2a0a, #051a05);
+  border: 1.5px solid rgba(39, 174, 96, 0.3);
+}
+
+.compare-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.badge-bad { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+.badge-good { background: rgba(39, 174, 96, 0.2); color: #27ae60; }
+
+.compare-content {
+  min-height: 260px;
+}
+
+.fake-doc {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.fake-line {
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background: rgba(255,255,255,0.08);
+}
+.fake-line.w100 { width: 100%; }
+.fake-line.w90 { width: 90%; }
+.fake-line.w80 { width: 80%; }
+.fake-line.w70 { width: 70%; }
+.fake-line.w60 { width: 60%; }
+.fake-line.w50 { width: 50%; }
+
+.fake-diagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.fake-chart {
+  background: rgba(39, 174, 96, 0.12);
+  border: 1px solid rgba(39, 174, 96, 0.2);
+  border-radius: 10px;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 12px;
+  gap: 4px;
+}
+
+.chart-bar {
+  width: 12px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(to top, rgba(39,174,96,0.4), rgba(39,174,96,0.8));
+}
+
+.fake-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(39, 174, 96, 0.08);
+  border: 1px solid rgba(39, 174, 96, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  height: 70px;
+}
+
+.mini-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(39, 174, 96, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #27ae60;
+  flex-shrink: 0;
+}
+
+.mini-arrow {
+  color: rgba(39, 174, 96, 0.4);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Badge / Pill ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.pill-accent { background: rgba(233,69,96,0.12); color: var(--accent); }
+.pill-gold { background: rgba(245,166,35,0.12); color: var(--gold); }
+.pill-green { background: rgba(39,174,96,0.12); color: var(--green); }
+.pill-blue { background: rgba(15,52,96,0.15); color: #5dade2; }
+
+/* ── Highlight Box ── */
+.highlight-box {
+  background: rgba(233, 69, 96, 0.08);
+  border: 1px solid rgba(233, 69, 96, 0.2);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.highlight-box-gold {
+  background: rgba(245, 166, 35, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.highlight-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.8);
+}
+
+.quote-mark {
+  font-size: 48px;
+  color: var(--accent);
+  line-height: 1;
+  opacity: 0.5;
+  font-family: Georgia, serif;
+}
+
+/* ── Decorative ── */
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.03;
+  background: #fff;
+}
+
+.deco-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+}
+
+.accent-line {
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gradient2);
+  margin-bottom: 20px;
+}
+
+/* ── Special: Claude Page ── */
+.claude-demo {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+}
+
+.claude-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 16px;
+}
+
+.claude-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #d4a574, #c4956a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.claude-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+
+.chat-bubble {
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  max-width: 85%;
+}
+
+.bubble-user {
+  background: rgba(233, 69, 96, 0.15);
+  border: 1px solid rgba(233, 69, 96, 0.2);
+  color: rgba(255,255,255,0.9);
+  margin-left: auto;
+}
+
+.bubble-ai {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+}
+
+/* ── Responsive Scaling ── */
+.slide-inner {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.center-inner {
+  align-items: center;
+  text-align: center;
+}
+
+/* ── Percentage Bar ── */
+.pct-bar-wrap {
+  width: 100%;
+  margin-bottom: 14px;
+}
+.pct-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.pct-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.pct-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* ── Key Point List ── */
+.key-list {
+  list-style: none;
+  padding: 0;
+}
+.key-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.85);
+}
+.key-list .bullet {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(233, 69, 96, 0.15);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* ── Infographic Stats ── */
+.stats-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 42px;
+  font-weight: 900;
+  background: var(--gradient2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* AI Badge Styling */
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, rgba(233,69,96,0.15), rgba(245,166,35,0.15));
+  border: 1px solid rgba(233,69,96,0.25);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.ai-badge .spark {
+  font-size: 18px;
+}
+
+/* Checklist */
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.check-on { background: rgba(39,174,96,0.2); color: #27ae60; }
+.check-warn { background: rgba(245,166,35,0.2); color: #f5a623; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ============================== SLIDE 0 : COVER ============================== -->
+<div class="slide bg-hero active" id="slide-0">
+  <div class="deco-glow" style="background:var(--accent);top:-200px;right:-100px;"></div>
+  <div class="deco-glow" style="background:#0f3460;bottom:-200px;left:-100px;"></div>
+  <div class="deco-circle" style="width:600px;height:600px;top:-200px;right:-200px;"></div>
+  <div class="deco-circle" style="width:300px;height:300px;bottom:-50px;left:10%;"></div>
+
+  <div style="margin-bottom:24px;">
+    <div class="ai-badge">
+      <span class="spark">✦</span> CONSULTING
+    </div>
+  </div>
+
+  <h1 class="hero-title">정부지원사업<br><span style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">합격 전략</span> 마스터클래스</h1>
+
+  <p class="hero-sub">지원사업 서치부터 사업계획서 작성까지 · 실전 컨설팅</p>
+
+  <div class="stats-row" style="margin-top:48px;">
+    <div class="stat-item">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">주요 지원사업</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1억</div>
+      <div class="stat-label">최대 지원금</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">핵심 전략</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">AI</div>
+      <div class="stat-label">필수 키워드</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 1 : 지원사업 MAP ============================== -->
+<div class="slide bg-dark" id="slide-1">
+  <span class="section-num">MAP</span>
+  <div class="slide-inner">
+    <div class="section-label">Overview</div>
+    <h2 class="section-title text-white">주요 타겟 지원사업 한눈에 보기</h2>
+
+    <div class="card-grid grid-3">
+      <!-- 1 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(233,69,96,0.12);color:var(--accent);">🚀</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill pill-accent">예비창업</span>
+        </div>
+        <div class="card-title text-white">예비창업패키지</div>
+        <div class="card-desc text-white">예비창업자 대상 사업화 지원<br>일반분야 660명 + 특화분야 120명</div>
+        <div class="card-amount">최대 1억원</div>
+      </div>
+      <!-- 2 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(93,173,226,0.12);color:#5dade2;">⚡</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill pill-blue">초기창업</span>
+        </div>
+        <div class="card-title text-white">초기창업패키지</div>
+        <div class="card-desc text-white">창업 3년 이내 기업 대상<br>일반형 + 딥테크 특화형</div>
+        <div class="card-amount">최대 1억원</div>
+      </div>
+      <!-- 3 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(245,166,35,0.12);color:var(--gold);">🎓</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill pill-gold">청년</span>
+        </div>
+        <div class="card-title text-white">청년창업사관학교</div>
+        <div class="card-desc text-white">39세 이하, 창업 3년 이내<br>입주공간 + 사업화 자금 지원</div>
+        <div class="card-amount">최대 1억원</div>
+      </div>
+      <!-- 4 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(39,174,96,0.12);color:var(--green);">✈️</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill pill-green">관광예비</span>
+        </div>
+        <div class="card-title text-white">관광벤처 예비</div>
+        <div class="card-desc text-white">우수 관광사업 아이템 보유<br>예비기업 발굴 지원</div>
+        <div class="card-amount">최대 7천만원</div>
+      </div>
+      <!-- 5 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(39,174,96,0.12);color:var(--green);">🌏</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill pill-green">관광초기</span>
+        </div>
+        <div class="card-title text-white">관광벤처 초기</div>
+        <div class="card-desc text-white">창업 후 3년 이내 기업<br>사업화 + 투자유치 + 시상</div>
+        <div class="card-amount">최대 8천만원</div>
+      </div>
+      <!-- 6 -->
+      <div class="card">
+        <div class="card-icon" style="background:rgba(155,89,182,0.12);color:#9b59b6;">🎨</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <span class="pill" style="background:rgba(155,89,182,0.12);color:#9b59b6;">예술</span>
+        </div>
+        <div class="card-title text-white">예술경영지원사업</div>
+        <div class="card-desc text-white">예술경영지원센터 주관<br>문화예술 사업화 지원</div>
+        <div class="card-amount">사업별 상이</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 2 : 서치하는 자세 ============================== -->
+<div class="slide bg-dark" id="slide-2">
+  <span class="section-num">01</span>
+  <div class="deco-glow" style="background:var(--accent);top:-150px;right:-150px;"></div>
+
+  <div class="slide-inner">
+    <div class="section-label">Strategy 01</div>
+    <h2 class="section-title text-white">지원사업을<br>서치하는 자세</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;width:100%;max-width:1100px;">
+      <!-- Left : Core Message -->
+      <div>
+        <ul class="key-list">
+          <li>
+            <span class="bullet">①</span>
+            <div><strong style="color:#fff;">매일 확인하라</strong><br>
+              <a href="https://www.k-startup.go.kr" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">k-startup.go.kr</a> 를 매일 확인하는 것이 기본이다
+            </div>
+          </li>
+          <li>
+            <span class="bullet">②</span>
+            <div><strong style="color:#fff;">공고 집중 시기</strong><br>대부분의 지원사업은 <span style="color:var(--gold);font-weight:600;">1월 ~ 3월</span>에 집중된다</div>
+          </li>
+          <li>
+            <span class="bullet">③</span>
+            <div><strong style="color:#fff;">통합공고 활용</strong><br>중앙부처 및 지자체 창업지원사업 통합공고에서 전체 사업을 조회할 수 있다</div>
+          </li>
+        </ul>
+
+        <div class="highlight-box" style="margin-top:24px;">
+          <div class="highlight-text">
+            💡 <strong>TIP</strong> — 공고 알림 서비스를 설정해두면 놓치지 않을 수 있다.<br>
+            <span style="opacity:0.6;">bizinfo.go.kr 에서도 중복 확인 필수</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right : Timeline -->
+      <div style="position:relative;">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:28px;">
+          <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:20px;letter-spacing:1px;">📅 2026 주요 일정</div>
+
+          <div style="position:relative;padding-left:24px;border-left:2px solid rgba(233,69,96,0.2);">
+            <div style="margin-bottom:20px;">
+              <div style="position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;background:var(--accent);"></div>
+              <div style="font-size:12px;color:var(--gold);font-weight:600;">1월 말</div>
+              <div style="font-size:14px;color:#fff;font-weight:600;">예비창업패키지 공고</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);">~2월 27일 마감</div>
+            </div>
+            <div style="margin-bottom:20px;">
+              <div style="position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:0;"></div>
+              <div style="font-size:12px;color:var(--gold);font-weight:600;">1월 ~ 2월</div>
+              <div style="font-size:14px;color:#fff;font-weight:600;">초기창업패키지</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);">딥테크 1/27 · 일반형 2/13 마감</div>
+            </div>
+            <div style="margin-bottom:20px;">
+              <div style="position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;background:var(--gold);margin-top:0;"></div>
+              <div style="font-size:12px;color:var(--gold);font-weight:600;">2월 초</div>
+              <div style="font-size:14px;color:#fff;font-weight:600;">청년창업사관학교</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);">2/2 ~ 3/3 접수</div>
+            </div>
+            <div style="margin-bottom:20px;">
+              <div style="position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;background:var(--green);margin-top:0;"></div>
+              <div style="font-size:12px;color:var(--green);font-weight:600;">2월 ~ 3월</div>
+              <div style="font-size:14px;color:#fff;font-weight:600;">관광벤처 예비 / 초기</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);">한국관광공사 주관</div>
+            </div>
+            <div>
+              <div style="position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;background:#9b59b6;margin-top:0;"></div>
+              <div style="font-size:12px;color:#9b59b6;font-weight:600;">2월</div>
+              <div style="font-size:14px;color:#fff;font-weight:600;">예술경영지원사업</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);">설명회 2/9 개최</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 3 : 미리 준비하는 자세 ============================== -->
+<div class="slide bg-dark" id="slide-3">
+  <span class="section-num">02</span>
+  <div class="deco-glow" style="background:#0f3460;bottom:-200px;left:-100px;"></div>
+
+  <div class="slide-inner center-inner">
+    <div class="section-label">Strategy 02</div>
+    <h2 class="section-title text-white" style="text-align:center;">미리 준비하는 자세</h2>
+
+    <!-- Flow Diagram -->
+    <div class="flow-container" style="margin-bottom:40px;">
+      <div class="flow-step">
+        <div class="flow-circle">🔨</div>
+        <div class="flow-label">사전 준비</div>
+        <div class="flow-sub">사업 아이디어<br>MVP / 프로토타입</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">✅</div>
+        <div class="flow-label">검증 단계</div>
+        <div class="flow-sub">시장 반응 확인<br>매출 / 사용자 확보</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">📋</div>
+        <div class="flow-label">공고 발표</div>
+        <div class="flow-sub">지원사업 모집<br>요건 확인</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">📝</div>
+        <div class="flow-label">신청</div>
+        <div class="flow-sub">"이미 하고 있는데<br>더 잘 할 수 있어요!"</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-circle">🏆</div>
+        <div class="flow-label">선정!</div>
+        <div class="flow-sub">사업화 자금<br>멘토링 지원</div>
+      </div>
+    </div>
+
+    <!-- Compare: Wrong vs Right Mindset -->
+    <div class="compare-wrap">
+      <div class="compare-box compare-bad">
+        <div class="compare-badge badge-bad">✕ 잘못된 자세</div>
+        <div style="text-align:center;padding:20px 0;">
+          <div style="font-size:48px;margin-bottom:16px;opacity:0.5;">🤷</div>
+          <div style="font-size:20px;font-weight:700;color:rgba(231,76,60,0.9);margin-bottom:12px;">"공고 나오면 그때 준비하지 뭐"</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">
+            아무런 준비가 안 된 상태에서<br>
+            사업계획서를 급하게 작성<br>
+            → 검증 없음 → <strong style="color:#e74c3c;">탈락</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-box compare-good">
+        <div class="compare-badge badge-good">✓ 올바른 자세</div>
+        <div style="text-align:center;padding:20px 0;">
+          <div style="font-size:48px;margin-bottom:16px;">🏃</div>
+          <div style="font-size:20px;font-weight:700;color:rgba(39,174,96,0.9);margin-bottom:12px;">"이미 하고 있어요, 더 잘 할 수 있어요!"</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">
+            사전에 시장 검증 완료<br>
+            매출 또는 사용자 데이터 보유<br>
+            → 신뢰성 확보 → <strong style="color:#27ae60;">합격</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 4 : 아이템 맞추기 ============================== -->
+<div class="slide bg-dark" id="slide-4">
+  <span class="section-num">03</span>
+  <div class="deco-glow" style="background:var(--accent);bottom:-100px;right:-100px;"></div>
+
+  <div class="slide-inner">
+    <div class="section-label">Strategy 03</div>
+    <h2 class="section-title text-white">지원사업에 맞춰<br>아이템을 조정하라</h2>
+
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:40px;width:100%;max-width:1100px;">
+      <div>
+        <!-- Diagram: Pivot -->
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;position:relative;">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;">
+            <div style="flex:1;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.15);border-radius:12px;padding:20px;text-align:center;">
+              <div style="font-size:28px;margin-bottom:8px;">💡</div>
+              <div style="font-size:13px;color:#fff;font-weight:600;">내 원래 아이디어</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">하고 싶은 사업</div>
+            </div>
+            <div style="font-size:28px;color:var(--gold);">⟶</div>
+            <div style="flex:1;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.15);border-radius:12px;padding:20px;text-align:center;">
+              <div style="font-size:28px;margin-bottom:8px;">🎯</div>
+              <div style="font-size:13px;color:#fff;font-weight:600;">지원사업 맞춤 조정</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">공고 요건에 맞춤</div>
+            </div>
+            <div style="font-size:28px;color:var(--green);">⟶</div>
+            <div style="flex:1;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.15);border-radius:12px;padding:20px;text-align:center;">
+              <div style="font-size:28px;margin-bottom:8px;">💰</div>
+              <div style="font-size:13px;color:#fff;font-weight:600;">선정 후 주도권</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">우리가 갑이 된다</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.12);border-radius:10px;padding:16px 20px;">
+            <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7;">
+              <span style="color:var(--gold);font-weight:700;">핵심 마인드셋 →</span> 지원사업에 붙고 나서 안 하면 어떡하지? 라는 걱정은 <strong style="color:#fff;">하지 마라.</strong><br>
+              선정되면 <span style="color:var(--green);font-weight:600;">우리가 갑</span>이 된다. 사업 방향은 나중에 조정할 수 있다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:28px;">
+          <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:20px;">🎯 실전 접근법</div>
+
+          <ul class="checklist">
+            <li>
+              <span class="check-icon check-on">✓</span>
+              공고의 <strong style="color:#fff;">평가항목</strong>을 먼저 분석
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              사업 아이템을 요건에 맞게 <strong style="color:#fff;">리프레이밍</strong>
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              핵심 가치는 유지하되 <strong style="color:#fff;">표현을 변경</strong>
+            </li>
+            <li>
+              <span class="check-icon check-warn">!</span>
+              동일 아이템으로 <strong style="color:#fff;">복수 지원사업</strong> 신청 가능
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              선정 후 <strong style="color:#fff;">실제 실행 방향</strong>은 조정 가능
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 5 : AI + 플랫폼 필수 ============================== -->
+<div class="slide bg-dark" id="slide-5">
+  <span class="section-num">04</span>
+  <div class="deco-glow" style="background:var(--accent);top:-100px;left:30%;"></div>
+
+  <div class="slide-inner center-inner">
+    <div class="section-label">Strategy 04</div>
+    <h2 class="section-title text-white" style="text-align:center;"><span style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI</span>가 없으면 탈락한다</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;width:100%;max-width:1100px;margin-bottom:32px;">
+      <!-- Rule 1 -->
+      <div class="card" style="border-color:rgba(233,69,96,0.2);text-align:center;">
+        <div style="font-size:56px;margin-bottom:16px;">🤖</div>
+        <div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;">AI 필수</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;">
+          정부 방침상<br>
+          <strong style="color:var(--accent);">"AI"라는 단어</strong>가<br>
+          사업계획서에 반드시 포함<br>
+          <span style="font-size:11px;opacity:0.5;margin-top:8px;display:block;">없으면 그 자리에서 탈락</span>
+        </div>
+      </div>
+      <!-- Rule 2 -->
+      <div class="card" style="border-color:rgba(93,173,226,0.2);text-align:center;">
+        <div style="font-size:56px;margin-bottom:16px;">🌐</div>
+        <div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;">플랫폼 지향</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;">
+          정부는 <strong style="color:#5dade2;">플랫폼</strong>을 좋아한다<br>
+          단순 서비스보다는<br>
+          플랫폼 비즈니스 모델로 포장<br>
+          <span style="font-size:11px;opacity:0.5;margin-top:8px;display:block;">매칭, 중개, 마켓플레이스 등</span>
+        </div>
+      </div>
+      <!-- Rule 3 -->
+      <div class="card" style="border-color:rgba(39,174,96,0.2);text-align:center;">
+        <div style="font-size:56px;margin-bottom:16px;">💻</div>
+        <div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;">웹페이지 준비</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;">
+          웹페이지 하나는<br>
+          <strong style="color:var(--green);">반드시 개발</strong>해서 준비<br>
+          1차 서류에 스크린샷 첨부<br>
+          <span style="font-size:11px;opacity:0.5;margin-top:8px;display:block;">2차 면접 대비에도 필수</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practical Example -->
+    <div class="highlight-box" style="max-width:1100px;">
+      <div style="display:flex;align-items:flex-start;gap:16px;">
+        <div style="font-size:32px;">💡</div>
+        <div class="highlight-text">
+          <strong style="color:var(--accent);">실전 예시</strong> — 커피숍 창업 → "AI 기반 개인 맞춤 커피 추천 플랫폼"으로 변환<br>
+          <span style="opacity:0.6;">핵심은 동일하지만 표현만 바꿔도 심사위원의 관심을 끌 수 있다</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 6 : 경력 뻥튀기 ============================== -->
+<div class="slide bg-dark" id="slide-6">
+  <span class="section-num">05</span>
+
+  <div class="slide-inner">
+    <div class="section-label">Strategy 05</div>
+    <h2 class="section-title text-white">대표자·직원 경력을<br>최대한 부풀려라</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;width:100%;max-width:1100px;">
+      <div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;">
+
+          <!-- Visual: Resume Enhancement -->
+          <div style="display:flex;gap:24px;align-items:flex-start;">
+            <div style="flex:1;">
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;margin-bottom:8px;">BEFORE</div>
+              <div style="background:rgba(231,76,60,0.06);border:1px solid rgba(231,76,60,0.12);border-radius:10px;padding:16px;">
+                <div style="font-size:11px;color:rgba(255,255,255,0.4);line-height:2;">
+                  ○ 프리랜서 디자인 경험<br>
+                  ○ 학교 프로젝트<br>
+                  ○ 아르바이트
+                </div>
+              </div>
+            </div>
+            <div style="color:var(--gold);font-size:24px;margin-top:36px;">⟶</div>
+            <div style="flex:1;">
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;margin-bottom:8px;">AFTER</div>
+              <div style="background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.12);border-radius:10px;padding:16px;">
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:2;">
+                  ○ UI/UX 디자인 컨설팅 3년<br>
+                  ○ 스타트업 공동창업 경험<br>
+                  ○ 서비스 운영 및 마케팅
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top:20px;background:rgba(245,166,35,0.08);border-color:rgba(245,166,35,0.2);">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="font-size:24px;">⚠️</div>
+            <div style="font-size:13.5px;line-height:1.7;color:rgba(255,255,255,0.8);">
+              <strong style="color:var(--gold);">핵심 포인트</strong><br>
+              증빙을 요하지 않는다. 경력과 역량은 최대한 어필할 것.
+              단, 완전한 허위가 아닌 <strong style="color:#fff;">리프레이밍</strong>이 핵심이다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:28px;">
+          <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:20px;">📋 경력 어필 체크리스트</div>
+
+          <ul class="checklist">
+            <li>
+              <span class="check-icon check-on">✓</span>
+              관련 분야 <strong style="color:#fff;">프로젝트 경험</strong>을 경력으로 변환
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              <strong style="color:#fff;">수치화</strong> — "3년 경력", "50개 프로젝트"
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              <strong style="color:#fff;">직함 업그레이드</strong> — CEO, CTO, PM
+            </li>
+            <li>
+              <span class="check-icon check-on">✓</span>
+              <strong style="color:#fff;">팀원 역량</strong>도 최대한 부각
+            </li>
+            <li>
+              <span class="check-icon check-warn">!</span>
+              사업 아이디어와 <strong style="color:#fff;">연결되는 경력</strong> 위주로
+            </li>
+          </ul>
+
+          <div style="margin-top:20px;padding:16px;background:rgba(39,174,96,0.06);border:1px solid rgba(39,174,96,0.1);border-radius:10px;">
+            <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:6px;">💪 TIP</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;">
+              심사위원은 "이 팀이 이 사업을 실행할 역량이 있는가"를 본다.<br>
+              경력이 사업과 연결될수록 점수가 높다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 7 : 도식화 (제일 중요) ============================== -->
+<div class="slide bg-dark" id="slide-7">
+  <span class="section-num">06</span>
+  <div class="deco-glow" style="background:var(--accent);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+  <div class="slide-inner center-inner">
+    <div class="section-label">Strategy 06 · 제일 중요</div>
+    <h2 class="section-title text-white" style="text-align:center;">사업계획서는 무조건<br><span style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">도식화</span>가 생명이다</h2>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+      <span class="pill pill-accent" style="font-size:14px;padding:8px 20px;">심사위원 1명 = 사업계획서 100개</span>
+      <span style="color:rgba(255,255,255,0.3);">→</span>
+      <span class="pill pill-gold" style="font-size:14px;padding:8px 20px;">줄글만 있으면 절대 안 읽는다</span>
+    </div>
+
+    <!-- Good vs Bad Comparison -->
+    <div class="compare-wrap">
+      <div class="compare-box compare-bad">
+        <div class="compare-badge badge-bad">✕ 이렇게 쓰면 탈락</div>
+        <div class="compare-content">
+          <div class="fake-doc">
+            <div style="font-size:11px;color:rgba(255,255,255,0.2);font-weight:600;margin-bottom:12px;">사업계획서 — 서비스 소개</div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w90"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w80"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w70"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w90"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w60"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w80"></div>
+            <div class="fake-line w100"></div>
+            <div class="fake-line w90"></div>
+            <div class="fake-line w50"></div>
+          </div>
+          <div style="text-align:center;margin-top:16px;font-size:13px;color:#e74c3c;font-weight:600;">
+            😴 줄글만 가득 → 심사위원 스킵
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-box compare-good">
+        <div class="compare-badge badge-good">✓ 이렇게 쓰면 합격</div>
+        <div class="compare-content">
+          <div class="fake-doc">
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;margin-bottom:12px;">사업계획서 — 서비스 소개</div>
+
+            <div class="fake-diagram">
+              <div class="fake-chart">
+                <div class="chart-bar" style="height:20px;"></div>
+                <div class="chart-bar" style="height:32px;"></div>
+                <div class="chart-bar" style="height:28px;"></div>
+                <div class="chart-bar" style="height:45px;"></div>
+                <div class="chart-bar" style="height:52px;"></div>
+              </div>
+              <div class="fake-flow">
+                <div class="mini-box">A</div>
+                <div class="mini-arrow">→</div>
+                <div class="mini-box">B</div>
+                <div class="mini-arrow">→</div>
+                <div class="mini-box">C</div>
+              </div>
+            </div>
+
+            <div class="fake-line w60" style="height:6px;margin-bottom:6px;"></div>
+            <div class="fake-line w50" style="height:6px;margin-bottom:12px;"></div>
+
+            <div style="display:flex;gap:8px;">
+              <div style="flex:1;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.12);border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#27ae60;">87%</div>
+                <div style="font-size:9px;color:rgba(255,255,255,0.3);">만족도</div>
+              </div>
+              <div style="flex:1;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.12);border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#27ae60;">3.2x</div>
+                <div style="font-size:9px;color:rgba(255,255,255,0.3);">성장률</div>
+              </div>
+              <div style="flex:1;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.12);border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#27ae60;">1.2만</div>
+                <div style="font-size:9px;color:rgba(255,255,255,0.3);">사용자</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:16px;font-size:13px;color:#27ae60;font-weight:600;">
+            👀 도식 + 차트 + 수치 → 눈에 확 들어온다
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 8 : CLOSING ============================== -->
+<div class="slide bg-hero" id="slide-8">
+  <div class="deco-glow" style="background:var(--accent);top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;"></div>
+  <div class="deco-circle" style="width:800px;height:800px;top:-300px;left:-200px;"></div>
+
+  <div class="slide-inner center-inner">
+    <div style="margin-bottom:32px;">
+      <div class="ai-badge">
+        <span class="spark">✦</span> SUMMARY
+      </div>
+    </div>
+
+    <h2 class="hero-title" style="font-size:clamp(36px,5vw,60px);">6가지만 기억하세요</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:800px;margin-top:40px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">01</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">매일 공고 확인</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">02</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">미리 준비하라</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">03</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">아이템 맞춰라</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">04</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">AI 필수 삽입</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">05</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;">경력 극대화</div>
+      </div>
+      <div style="background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">06</div>
+        <div style="font-size:13px;color:#fff;font-weight:700;">무조건 도식화</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px 40px;text-align:center;display:flex;align-items:center;justify-content:center;gap:12px;">
+        <div style="font-size:28px;">🏆</div>
+        <div style="font-size:18px;color:var(--gold);font-weight:700;">합격!</div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;">
+      <div class="quote-mark">"</div>
+      <div style="font-size:20px;color:rgba(255,255,255,0.7);font-weight:400;line-height:1.7;max-width:700px;margin-top:-8px;">
+        준비된 자만이 기회를 잡는다.<br>
+        <span style="color:var(--accent);font-weight:700;">지금 바로 시작하세요.</span>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;font-size:13px;color:rgba(255,255,255,0.25);letter-spacing:3px;">
+      2026
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="slide-counter"><span id="current">01</span> / <span id="total">10</span></div>
+<button class="arrow-nav arrow-prev" onclick="go(-1)">‹</button>
+<button class="arrow-nav arrow-next" onclick="go(1)">›</button>
+<div class="nav-bar" id="navBar"></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+// Build nav dots
+const nav = document.getElementById('navBar');
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  nav.appendChild(d);
+});
+
+document.getElementById('total').textContent = String(total).padStart(2, '0');
+
+function goTo(n) {
+  if (n < 0 || n >= total) return;
+  slides[cur].classList.remove('active');
+  nav.children[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  nav.children[cur].classList.add('active');
+  document.getElementById('current').textContent = String(cur + 1).padStart(2, '0');
+}
+
+function go(dir) { goTo(cur + dir); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(total - 1);
+});
+
+// Touch
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+});
+</script>
+
+</body>
+</html>
